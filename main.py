@@ -12,13 +12,18 @@ cap = cv2.VideoCapture('<Video_File_Path>')
 while True:
     time.sleep(.05)
     ret, frame = cap.read()
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    trees = tree_classifier.detectMultiScale(gray, 1.3, 5)
-    for (x, y, w, h) in trees:
-        image = cv2.rectangle(frame, (x, y), (x+w, y+h), (0,0,255), 2)
-        cv2.putText(image, 'Tree', (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-        cv2.imshow('Trees', image)
-        cv2.waitKey(1)
+
+    if ret is True:
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        trees = tree_classifier.detectMultiScale(gray, 1.3, 5)
+        for (x, y, w, h) in trees:
+            image = cv2.rectangle(frame, (x, y), (x+w, y+h), (0,0,255), 2)
+            cv2.putText(image, 'Tree', (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+            cv2.imshow('Trees', image)
+            cv2.waitKey(1)
+
+    else:
+        break
 
 cap.release()
 cv2.destroyAllWindows()
